@@ -1,4 +1,13 @@
-iota-beyond-rest
-================
+# Beyond REST: Building reliable distributed apps
 
-Workspace for the "Beyond REST: Building reliable distributed apps" at IoTAConf Oct. 2014
+This is presentation delivered by Richard Clark and Todd Montgomery of Kaazing at IoTAConf Oct. 2014. We're making the sources here for people to read, build on, etc.
+
+## Building the presentation
+
+1. Install [Pandoc](http://johnmacfarlane.net/pandoc/)
+2. Clone [reveal.js](https://github.com/hakimel/reveal.js/) at the same level as this repo (i.e. ../reveal.js should be a legal path)
+3. make
+
+## Want to know more?
+
+Contact [Richard](mailto:richard.clark@kaazing.com) or [Todd](mailto:todd.montgomery@kaazing.com)
