@@ -12,4 +12,4 @@ clean:
 	rm -rf $(compiled)
 
 %.html: %.markdown custom.css
-	$(PANDOC) $<  -s --slide-level 2 -f markdown -t revealjs -V revealjs-url=../reveal.js -V theme=default --include-in-header custom.css -o $@
+	$(PANDOC) $<  -i -s --slide-level 2 -f markdown -t revealjs -V revealjs-url=../reveal.js -V theme=default --include-in-header custom.css -o $@
