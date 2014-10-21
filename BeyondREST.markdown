@@ -125,9 +125,6 @@ Might not seem like a problem, but...
 - Congested networks (QED)
 - Rural access & other low-bandwidth networks
 - Saturating NICs, links, etc.
-
-...
-
 - Volume == latency
 
 <div class="notes">
@@ -339,7 +336,7 @@ ws.send(data);
 - Potential for losing data in transit
 - TCP push-back
 
-# Enterprise messaging
+# Using message brokers
 
 ## The overall design of a messaging system
 
@@ -350,14 +347,16 @@ ws.send(data);
 - Financial (and related) broadcasting
 - Extending internal processes
 
+## Common messaging systems
+
+- JMS
+- AMQP
+- MQTT
+
 ## JMS overview
 
 - Basic building blocks: Queues, Topics, etc.
 - STOMP as an unofficial transport layer for JMS
-
-## AMQP overview
-- AMQP terminology
-- AMQP wireline format
 
 ## Enterprise messaging design patterns
 
@@ -386,25 +385,39 @@ ws.send(data);
 - Restoring subscriptions
 - Message retries
 
-## Lab: Enterprise messaging from the client side
 
-- TODO KAAZING Gateway or Node+STOMP
+# Lab: Experimenting with messaging
+
+## Components
+
+- [Apache ActiveMQ](http://activemq.apache.org)
+- [stomp-websocket](http://jmesnil.net/stomp-websocket/doc/)
+- Your browser
+
+## Setup
+
+1. [Download ActiveMQ](http://activemq.apache.org/activemq-5100-release.html)
+2. Add to configuration file
+```
+<transportConnectors>
+  <transportConnector name="websocket" uri="ws://0.0.0.0:61614"/>
+</transportConnectors>
+```
+3. Navigate to [http://localhost:8161/demo/websocket](http://localhost:8161/demo/websocket)
 
 # Experimenting with degraded reliability
 
 ## Specific tools
 
+- Network link conditioner (OS X, iOS)
 - BPF (*nix general)
-- Network link conditioner
-- Network link conditioner on iOS
-			(? for Android)
 
 ## Lab: Experimenting with degraded reliability
 
-# Going deeper
+1. Set up one of your previous demos.
+2. Interfere with the connection quality.
+3. Examine the results.
 
-## TODO add additional research
 
-# Conclusion
 
-- TODO write
+
