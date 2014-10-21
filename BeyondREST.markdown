@@ -12,10 +12,10 @@
 
 ## Say a little about yourself
 
-- Who you are
-- What's your background
-- Any other programming experience?
-- What's one thing you'd like from today?
+>- Who you are
+>- What's your background
+>- Any other programming experience?
+>- What's one thing you'd like from today?
 
 ## Why this session?
 
@@ -111,9 +111,11 @@ Another approach is to use a messaging fabric that supports full reliable messag
 - (Related) Race conditions between multiple data channels
 
 <div class="notes">
-- Enough latency and the other side might start timing out. This can wreak havoc in a distributed system (and often leads to cascading failures.)
-- TCP/IP is designed for in-order delivery *in a single session*. But take the example of a mobile client on a train (perhaps reporting entry and exit of each block), if these are individual AJAX sends they could arrive out of order if latency is inconsistent and high enough.
-- If you have multiple channels (e.g. a snapshot followed by a stream), there's a risk of a race condition where your snapshot can be outdated relative to the stream. (Discussion approaches to mitigating this.)
+Enough latency and the other side might start timing out. This can wreak havoc in a distributed system (and often leads to cascading failures.)
+
+TCP/IP is designed for in-order delivery *in a single session*. But take the example of a mobile client on a train (perhaps reporting entry and exit of each block), if these are individual AJAX sends they could arrive out of order if latency is inconsistent and high enough.
+
+If you have multiple channels (e.g. a snapshot followed by a stream), there's a risk of a race condition where your snapshot can be outdated relative to the stream. (Discussion approaches to mitigating this.)
 
 What are the possible mitigations? (Discussion) Reduce the number of calls, pass as much as possible per call, have long-lived sessions (e.g. websocket). Timestamps might help, if the data is coming from one source with a relatively consistent clock (i.e. not multiple sources as synchronization is never guaranteed.) A monotonically increasing identifier is an even better bet, especially if it can be used to detect gaps in the message sequence.
 </div>
@@ -142,7 +144,7 @@ From [CometD benchmark](https://webtide.com/cometd-2-4-0-websocket-benchmarks/)
 Talk about latency under conditions of network saturation.
 </div>
 
-## (Aside) The same benchmark with WebSockets
+## The same benchmark with WebSockets
 
 ![CometD Websocket benchmark](https://webtide.com/wp-content/uploads/2011/09/websocket.png)
 
@@ -290,7 +292,7 @@ ws.send(data);
 
 ## Try it in Node
 
-- Using (ws for node)[http://einaros.github.io/ws/]
+- Using [ws for node](http://einaros.github.io/ws/)
 1. `npm install ws` 
 2. `wscat -c ws://echo.websocket.org -p 13`
 
