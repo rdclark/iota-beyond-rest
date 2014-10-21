@@ -1,5 +1,5 @@
 % Beyond REST: Building Reliable Distributed Applications for the Web
-% Richard Clark and Todd Montgomery
+% Richard Clark
 % October 22, 2014
 
 # Introductions
@@ -9,12 +9,6 @@
 - Richard Clark
 - Head of Global Training, [Kaazing](http://www.kaazing.com)
 - Formerly: Apple, General Magic, HP, Verifone, etc.
-
-## Who are we?
-
-- Todd Montgomery
-- Chief Architect, [Kaazing](http://www.kaazing.com)
-- Formerly: 29West, ___
 
 ## Say a little about yourself
 
