@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<meta chartset=utf-8>
+<title>Echo test</title>
+<style>
+.log {color: black}
+.out {color: blue}
+.in  {color: green}
+.err {color: red}
+</style>
+<h1>Echo test results</h1>
+<div id="log"></div>
+<script>
+(function() {
+	'use strict';
+	var ws = new WebSocket("wss://echo.websocket.org");
+	var out = document.querySelector('#log');
+
+	function log(message, cid) {
+		cid = cid || 'log';
+		out.innerHTML += '<div class="'+ cid + '">' + message + '</div>\n'; 
+	}
+
+	function send(data) {
+		ws.send(data);
+		log("Sent: " + data, 'out');
+	}
+
+	ws.onopen = function() {
+		log("Socket open");
+	}
+
+	ws.onmessage = function(evt) {
+		log("In: " + evt.data, 'in');
+	}
+
+	ws.onclose = function() {
+		log("Socket closed");
+	}
+
+	ws.onerror = function(err) {
+		log("Error: "+ err.data, 'err');
+	}
+
+
+}());
+</script>

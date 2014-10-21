@@ -4,7 +4,7 @@
 
 # Introductions
 
-## Who are we?
+## Who am I?
 
 - Richard Clark
 - Head of Global Training, [Kaazing](http://www.kaazing.com)
@@ -34,9 +34,7 @@ But, to be clear: we're not the be-all and end-all experts in distributed comput
 </div>
 
 
-# A distributed system you know and love: The web
-
-TODO find a picture
+# The web as a distributed system
 
 ## Characteristics of the web
 
@@ -65,7 +63,7 @@ TODO find a picture
 - Who gets priority
 
 <div class="notes">
-TODO talk about the problem of duplicated requests (e.g. in commerce), how people recover from errors (manual reloading), how this exacerbates traffic problems, etc. 
+Talk about the problem of duplicated requests (e.g. in commerce), how people recover from errors (manual reloading), how this exacerbates traffic problems, etc. 
 
 Also discuss the security model, cache-related challenges, lack of traffic prioritization, etc.
 </div>
@@ -140,11 +138,16 @@ This is one of my largest indictments of REST: the overhead can overwhelm the da
 
 ## Bandwidth == latency (sometimes)
 
-TODO show CometD benchmark image
+![COMET benchmark](https://webtide.com/wp-content/uploads/2011/09/http.png)
+From [CometD benchmark](https://webtide.com/cometd-2-4-0-websocket-benchmarks/)
 
 <div class="notes">
 Talk about latency under conditions of network saturation.
 </div>
+
+## (Aside) The same benchmark with WebSockets
+
+![CometD Websocket benchmark](https://webtide.com/wp-content/uploads/2011/09/websocket.png)
 
 ## "The network is secure"
 
@@ -219,19 +222,16 @@ We're generally talking about a subset of distributed systems here (as opposed t
 ## Asynchronous operations
 
 - Request/response and head of line blocking
-- 
 
 ## Handling duplicate transmissions
 
 - Monotonically increasing IDs
 - *Not* timestamps!
 - Multiple store and forward sources (e.g. Redis under partition)
-- ()
 
 <div class="notes">
 Talk about the simple case of a client forwarding to one reader and holding the value until the eventual ack. Serial numbers as a reliable indicator (not timestamps, and explain why.) What happens when a network partition can mean a new master (e.g. Redis) and why the old master must reject writes as soon as it loses master status. (However, we also have the chance to present values back to the client for confirmation, but we always have a risk of data loss.)
 </div>
-
 
 # WebSockets as a transport mechanism
 
@@ -254,6 +254,11 @@ Talk about the simple case of a client forwarding to one reader and holding the 
 - Minimal header
 - Stream encryption to protect proxies
 
+## Quick demo
+
+- [websocket.org](http://www.websocket.org/echo.html)
+- Chrome developer tools
+
 ## Protocols and extensions
 
 - Uses for protocols
@@ -263,9 +268,52 @@ Talk about the simple case of a client forwarding to one reader and holding the 
 
 - WS over TLS == WSS
 
+## Programming with WebSockets
+
+```
+var ws = new WebSocket("wss://echo.websocket.org");
+
+ws.onopen = function() { ... }
+
+ws.onmessage = function(evt) { ... }
+
+ws.onclose = function() { ... }
+
+ws.onerror = function(err) { ... }
+
+ws.send(data);
+```
+
+# Lab: Trivial Client-server
+
+## Echoing off websocket.org
+
+- Hosted demo: [http://www.websocket.org/echo.html](http://www.websocket.org/echo.html)
+- Host your own: `python -m SimpleHTTPServer 9999`
+
+## Try it in Node
+
+- Using (ws for node)[http://einaros.github.io/ws/]
+1. `npm install ws` 
+2. `wscat -c ws://echo.websocket.org -p 13`
+
+## Echoing off your local machine
+
+1. `npm install ws` (if not done before)
+2. `python -m SimpleHTTPServer 9999` 
+3. `wscat --listen 9998`
+4. Copy and modify web page
+
+## Experiments
+
+- Machine to machine (via `.local` addresses)
+- Build a simple server in node (echo or chat)
+
+# WebSockets for IoT
+
 ## Real-world deployment
 
-- TODO insert proxy art
+![Proxy servers](img/proxy.jpg)
 
 ## Work-arounds and alternatives
 
@@ -283,7 +331,7 @@ Talk about the simple case of a client forwarding to one reader and holding the 
 ## WebSockets in embedded devices
 
 - Requirements for device-level implementation
-- Common software stacks (TODO)
+- Common software stacks: [libwebsiockets](http://libwebsockets.org/trac/libwebsockets), [Minnow Server (commercial)](https://realtimelogic.com/products/sharkssl/minnow-server/)
 - Power consumption
 
 ## WebSockets, the TCP stack, and data loss
@@ -291,21 +339,11 @@ Talk about the simple case of a client forwarding to one reader and holding the 
 - Potential for losing data in transit
 - TCP push-back
 
-## Lab: Quick WebSocket demo with websocket.org and the Chrome dev tools
-
-# Experimenting with distributed systems
-
-## TODO items (NodeJS)
-
-## Describing the setup & labs
-
-## Lab: Bidirectional client-server via NodeJS
-
 # Enterprise messaging
 
 ## The overall design of a messaging system
 
-- TODO grab Kaazing art
+![Messaging system](img/messaging.jpg)
 
 ## Common use cases
 
@@ -363,4 +401,10 @@ Talk about the simple case of a client forwarding to one reader and holding the 
 
 ## Lab: Experimenting with degraded reliability
 
+# Going deeper
+
+## TODO add additional research
+
 # Conclusion
+
+- TODO write
