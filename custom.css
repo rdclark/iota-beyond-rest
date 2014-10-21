@@ -1,0 +1,5 @@
+<!-- Override the reveal.js styles -->
+<style type="text/css">
+	.reveal h1 { font-size: 1.75em; }
+	.reveal h2 { font-size: 1.50em; }
+</style>
