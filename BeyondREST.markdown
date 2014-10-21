@@ -358,6 +358,37 @@ ws.send(data);
 - Basic building blocks: Queues, Topics, etc.
 - STOMP as an unofficial transport layer for JMS
 
+## STOMP
+
+- Frame-based
+- Request-response
+- Heartbeat optional
+
+```
+COMMAND
+header1:value1
+header2:value2
+
+Body^@
+```
+## STOMP Commands
+
+>- ABORT
+>- ACK
+>- BEGIN
+>- COMMIT
+>- CONNECT
+>- DISCONNECT
+>- SEND
+>- SUBSCRIBE
+>- UNSUBSCRIBE
+
+## STOMP Responses
+
+>- ERROR
+>- MESSAGE
+>- RECEIPT
+
 ## Enterprise messaging design patterns
 
 - Broadcast
