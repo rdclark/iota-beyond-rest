@@ -167,6 +167,7 @@ Mitigations: Minimize number of connection handshakes, use of PKCS, continuous s
 
 - Machines move, local networks change, messaging paths change
 - What do you do when a node becomes detached?
+- What do you do when a whole subnet becomes detached (and the problem of "split brain")
 
 <div class="notes">
 Less of an issue if you rely on DNS, but even local network issues can get you into trouble. How do you maintain connectivity when your protocols change and/or your endpoint names change (e.g. queues, topics.) 
@@ -444,16 +445,34 @@ Body^@
 
 # Recovery strategies
 
+## Recovery strategies for messaging systems
+
+- Restoring subscriptions
+- Message retries
+- Reload vs. Partial synchronization
+
 ## Messaging systems behavior under degraded reliability
 
 - Client-broker communication
 - Inter-broker communication (e.g. RabbitMQ)
 
-## Recovery strategies for messaging systems
+## Other thoughts
 
-- Restoring subscriptions
-- Message retries
+- Perfectly consistent systems are *slow*
+- Tolerate inconsistencies, resolve lazily
+- Rolling your own CAP systems isn't recommended
 
+## For more information
+
+- See the [Jepsen](http://aphyr.com/tags/jepsen) archives
+- Especially [The Network is Reliable](http://aphyr.com/posts/288-the-network-is-reliable) and the [Final Thoughts](http://aphyr.com/posts/286-call-me-maybe-final-thoughts
+)
+
+# Contact information
+
+Richard Clark 
+[richard.clark@kaazing.com](mailto:richard.clark@kaazing.com) 
+Twitter/github: rdclark
 
 
 
