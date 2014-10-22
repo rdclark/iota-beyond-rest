@@ -476,7 +476,6 @@ Body^@
 2. Subscribe to a *temporary* queue from the browser. Add a listener
 3. Send text messages to the queue address, add a reply-to header w/ the temporary queue address
 4. Create a "server" (in node or browser) that echoes incoming on queue to reply-to
-5. What happens to this when the network is interrupted?
 
 # Testing under degraded reliability
 
