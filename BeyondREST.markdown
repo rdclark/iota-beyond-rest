@@ -203,36 +203,6 @@ Talk again about when happens when you hit NIC saturation. Also, adding a new la
 Added by James Gosling in 1988. Most architects don't fall into this trap, but beware the risks introduced by proprietary protocols and what happens when deployments don't happen across the whole network at once.
 </div>
 
-# Building more reliable distributed systems
-
-## Idempotency
-
-- "[A]n operation that will produce the same results if executed once or multiple times" [http://en.wikipedia.org/wiki/Idempotence#Computer_science_meaning](Wikipedia)
-
-## Hub and spoke vs. peer to peer
-
-- Techniques (and risks) in peer-to-peer
-- Connectivity (where is the network likely to break?)
-- Message forwarding via hubs
-
-<div class="notes">
-We're generally talking about a subset of distributed systems here (as opposed to a distributed database, say) where devices are forwarding results to a central location and receiving commands from there or another fixed hub. But let's talk about true peer to peer and its options, where the network is likely to be severed, and what architetectures could work.
-</div>
-
-## Asynchronous operations
-
-- Request/response and head of line blocking
-
-## Handling duplicate transmissions
-
-- Monotonically increasing IDs
-- *Not* timestamps!
-- Multiple store and forward sources (e.g. Redis under partition)
-
-<div class="notes">
-Talk about the simple case of a client forwarding to one reader and holding the value until the eventual ack. Serial numbers as a reliable indicator (not timestamps, and explain why.) What happens when a network partition can mean a new master (e.g. Redis) and why the old master must reject writes as soon as it loses master status. (However, we also have the chance to present values back to the client for confirmation, but we always have a risk of data loss.)
-</div>
-
 # WebSockets as a transport mechanism
 
 ## Why WebSockets was created
@@ -243,26 +213,50 @@ Talk about the simple case of a client forwarding to one reader and holding the 
 
 # WebSocket overview
 
-## Handshake
+## Basic Websocket Handshake
 
-- HTTP GET w/ extra fields
-- HTTP 101 response
-- Optional: Extensions, Protocol
+```
+HTTP GET /ws
+Host: www.example.com
+Connection: upgrade
+Upgrade: websocket
+Sec-Websocket-Key: **16-byte nonce**
+Sec-Websocket-Version: 13
+Origin: http://www.example.com/
+Cookie: **optional, if needed**
+```
+
+**Server reply**
+```
+HTTP/1.1 101 "Switching Protocols"
+Connection: upgrade
+Upgrade: websocket
+Sec-Websocket-Accept: **SHA1 hash**
+```
 
 ## Packet framing
 
-- Minimal header
+- Minimal header (2-10 bytes)
 - Stream encryption to protect proxies
+
+## Protocols and extensions
+
+```
+HTTP GET /ws
+Host: www.example.com
+Connection: upgrade
+Upgrade: websocket
+Sec-Websocket-Key: **16-byte nonce**
+Sec-Websocket-Version: 13
+Origin: http://www.example.com/
+Sec-Websocket-Protocol: **protocol [, protocol]* **
+Sec-Websocket-Extensions: **extension [, extension]* **
+```
 
 ## Quick demo
 
 - [websocket.org](http://www.websocket.org/echo.html)
 - Chrome developer tools
-
-## Protocols and extensions
-
-- Uses for protocols
-- Uses for extensions
 
 ## Securing the connection
 
@@ -338,6 +332,39 @@ ws.send(data);
 
 - Potential for losing data in transit
 - TCP push-back
+
+# Building more reliable distributed systems
+
+## Idempotency
+
+- "[A]n operation that will produce the same results if executed once or multiple times" [http://en.wikipedia.org/wiki/Idempotence#Computer_science_meaning](Wikipedia)
+
+## Hub and spoke vs. peer to peer
+
+- Techniques (and risks) in peer-to-peer
+- Connectivity (where is the network likely to break?)
+- Message forwarding via hubs
+
+<div class="notes">
+We're generally talking about a subset of distributed systems here (as opposed to a distributed database, say) where devices are forwarding results to a central location and receiving commands from there or another fixed hub. But let's talk about true peer to peer and its options, where the network is likely to be severed, and what architetectures could work.
+</div>
+
+## Resilience to network issues
+
+- HTTP GET (e.g.) and head of line blocking
+- Two Phase Commit (recipients indicate readiness, sent commit)
+- Three Phase Commit (recipients indicate readiness, controller indicates intent, sent commit)
+
+
+## Handling duplicate transmissions
+
+- Monotonically increasing IDs
+- *Not* timestamps!
+- Multiple store and forward sources (e.g. Redis under partition)
+
+<div class="notes">
+Talk about the simple case of a client forwarding to one reader and holding the value until the eventual ack. Serial numbers as a reliable indicator (not timestamps, and explain why.) What happens when a network partition can mean a new master (e.g. Redis) and why the old master must reject writes as soon as it loses master status. (However, we also have the chance to present values back to the client for confirmation, but we always have a risk of data loss.)
+</div>
 
 # Using message brokers
 
@@ -428,7 +455,30 @@ Body^@
 ```
 3. Navigate to [http://localhost:8161/demo/websocket](http://localhost:8161/demo/websocket)
 
-# Experimenting with degraded reliability
+## Experimenting with topics
+
+1. Subscribe to a topic from the browser
+2. Add a listener to the topic
+3. View the topic via [http://localhost:8161](http://localhost:8161)
+4. Send messages from there, view on client
+5. Send messages from client, view on client
+6. Try with multiple clients
+
+## Experimenting with queues
+
+1. Subscribe to a queue from the browser, add a listener
+2. View the queue via the admin interface, send messages
+3. What happens with multiple listeners?
+
+## Experimenting with request/response
+
+1. Subscribe to a queue from the browser (for sending)
+2. Subscribe to a *temporary* queue from the browser. Add a listener
+3. Send text messages to the queue address, add a reply-to header w/ the temporary queue address
+4. Create a "server" (in node or browser) that echoes incoming on queue to reply-to
+5. What happens to this when the network is interrupted?
+
+# Testing under degraded reliability
 
 ## Specific tools
 
@@ -438,10 +488,11 @@ Body^@
 
 ## Lab: Experimenting with degraded reliability
 
-1. Set up one of your previous demos.
-2. Interfere with the connection quality.
-3. Examine the results.
-
+1. Set up an echo server (e.g. topic reflector or queues with echo)
+2. Add sending a stream of messages
+3. Interfere with the connection quality
+4. Examine the results
+5. Try with another configuration
 
 # Recovery strategies
 
