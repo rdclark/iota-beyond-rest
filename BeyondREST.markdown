@@ -408,17 +408,6 @@ Body^@
 - Header exclusion
 - Calculating message deltas
 
-## Messaging systems behavior under degraded reliability
-
-- Client-broker communication
-- Inter-broker communication (e.g. RabbitMQ)
-
-## Recovery strategies for messaging systems
-
-- Restoring subscriptions
-- Message retries
-
-
 # Lab: Experimenting with messaging
 
 ## Components
@@ -444,12 +433,26 @@ Body^@
 
 - Network link conditioner (OS X, iOS)
 - BPF (*nix general)
+- Fiddler (Windows)
 
 ## Lab: Experimenting with degraded reliability
 
 1. Set up one of your previous demos.
 2. Interfere with the connection quality.
 3. Examine the results.
+
+
+# Recovery strategies
+
+## Messaging systems behavior under degraded reliability
+
+- Client-broker communication
+- Inter-broker communication (e.g. RabbitMQ)
+
+## Recovery strategies for messaging systems
+
+- Restoring subscriptions
+- Message retries
 
 
 
