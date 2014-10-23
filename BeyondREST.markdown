@@ -325,7 +325,7 @@ ws.send(data);
 ## WebSockets in embedded devices
 
 - Requirements for device-level implementation
-- Common software stacks: [libwebsiockets](http://libwebsockets.org/trac/libwebsockets), [Minnow Server (commercial)](https://realtimelogic.com/products/sharkssl/minnow-server/)
+- Common software stacks: [libwebsockets](http://libwebsockets.org/trac/libwebsockets), [Minnow Server (commercial)](https://realtimelogic.com/products/sharkssl/minnow-server/)
 - Power consumption
 
 ## WebSockets, the TCP stack, and data loss
