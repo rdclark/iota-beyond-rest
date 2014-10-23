@@ -1,6 +1,6 @@
 # Beyond REST: Building reliable distributed apps
 
-This is presentation delivered by Richard Clark and Todd Montgomery of Kaazing at IoTAConf Oct. 2014. We're making the sources here for people to read, build on, etc.
+This is presentation delivered by Richard Clark of Kaazing at IoTAConf Oct. 2014. We're making the sources here for people to read, build on, etc.
 
 ## Building the presentation
 
@@ -10,4 +10,4 @@ This is presentation delivered by Richard Clark and Todd Montgomery of Kaazing a
 
 ## Want to know more?
 
-Contact [Richard](mailto:richard.clark@kaazing.com) or [Todd](mailto:todd.montgomery@kaazing.com)
+Contact [Richard](mailto:richard.clark@kaazing.com) 
